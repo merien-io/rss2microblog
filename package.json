@@ -17,9 +17,10 @@
   "description": "A Node.js application that automatically crossposts RSS feed items to multiple social media platforms",
   "main": "src/index.js",
   "devDependencies": {},
-  "scripts": {
+"scripts": {
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
+},
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/merien-io/rss2microblog.git"
