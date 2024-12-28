@@ -1,0 +1,32 @@
+# config/feeds.yml.example
+feeds:
+  example_feed:
+    url: https://example.com/feed.xml
+    platforms:
+      - bluesky
+      - threads
+      - mastodon
+    settings:
+      bluesky:
+        identifier: ${BLUESKY_EXAMPLE_IDENTIFIER}
+        password: ${BLUESKY_EXAMPLE_PASSWORD}
+      threads:
+        accessToken: ${THREADS_EXAMPLE_TOKEN}
+      mastodon:
+        instance: ${MASTODON_EXAMPLE_INSTANCE}
+        accessToken: ${MASTODON_EXAMPLE_TOKEN}
+        visibility: public
+
+  another_example:
+    url: https://another-example.com/rss
+    platforms:
+      - bluesky
+      - mastodon
+    settings:
+      bluesky:
+        identifier: ${BLUESKY_ANOTHER_IDENTIFIER}
+        password: ${BLUESKY_ANOTHER_PASSWORD}
+      mastodon:
+        instance: ${MASTODON_ANOTHER_INSTANCE}
+        accessToken: ${MASTODON_ANOTHER_TOKEN}
+        visibility: public

@@ -1,0 +1,59 @@
+# .gitignore
+
+# Dependency directories
+node_modules/
+npm-debug.log
+
+# cache and buffer directories
+downloads/
+cache/
+
+# Database files and directory
+/data/
+*.db
+
+# Api dir
+api/
+
+
+# Ignore actual configuration file
+config/feeds.yml
+
+# Ignore environment files
+.env
+.env~
+.env.*
+
+
+# Mac specific
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Thumbnails
+._*
+Thumbs.db
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Ignore IDE specific files
+*.sublime*
+.zed/
+*.iml
+*.idea
+.vscode/
