@@ -24,8 +24,8 @@ A Node.js application that automatically crossposts RSS feed items to multiple s
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/rss-to-social.git
-cd rss-to-social
+git clone https://github.com/merien-io/rss2microblog.git
+cd rss2microblog
 ```
 
 2. Install dependencies:
