@@ -11,5 +11,31 @@
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "xml2js": "^0.6.2"
-  }
+  },
+  "name": "rss2mircoblog",
+  "version": "1.0.0",
+  "description": "A Node.js application that automatically crossposts RSS feed items to multiple social media platforms",
+  "main": "src/index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/merien-io/rss2microblog.git"
+  },
+  "keywords": [
+    "rss",
+    "microblog",
+    "mastodon",
+    "bluesky",
+    "threads.net",
+    "meta"
+  ],
+  "author": "merien bv",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/merien-io/rss2microblog/issues"
+  },
+  "homepage": "https://github.com/merien-io/rss2microblog#readme"
 }
