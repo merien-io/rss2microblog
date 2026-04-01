@@ -16,7 +16,7 @@ A Node.js application that automatically crossposts RSS feed items to multiple s
 
 ## Prerequisites
 
-- Node.js 16.x or higher
+- Node.js 18.x or higher
 - NPM or Yarn
 - SQLite3
 
