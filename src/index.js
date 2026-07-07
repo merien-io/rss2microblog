@@ -13,23 +13,30 @@ async function processFeeds() {
       console.log(`Processing feed: ${feedId}`);
       const items = await feedHandler.fetchFeed(feed.url);
       
-      // Take only the 30 most recent items
+      // Sort newest first
       const recentItems = items
         .sort((a, b) => b.pubDate - a.pubDate)
         .slice(0, 30);
 
-      let postsThisInterval = 0;
-      const MAX_POSTS_PER_INTERVAL = 8;
+      // Safe limit: Max 2 posts per platform per interval
+      const MAX_POSTS_PER_INTERVAL = 2;
+      
+      // Track posts count per platform individually
+      let postsThisInterval = {};
+      feed.platforms.forEach(p => postsThisInterval[p] = 0);
 
       for (const item of recentItems) {
-        if (postsThisInterval >= MAX_POSTS_PER_INTERVAL) {
-          console.log(`Reached maximum posts (${MAX_POSTS_PER_INTERVAL}) for feed ${feedId} this interval`);
-          break;
-        }
-
         for (const platformId of feed.platforms) {
-          // Skip if already posted
+          // Skip if already posted or marked as skipped
           if (await db.isPosted(feedId, item.guid, platformId)) {
+            continue;
+          }
+
+          // If we already hit the safe limit of 2 for this platform,
+          // mark this older item as 'skipped' so it never gets posted.
+          if (postsThisInterval[platformId] >= MAX_POSTS_PER_INTERVAL) {
+            console.log(`Skipping older item ${item.guid} on ${platformId} to prevent backlog spam`);
+            await db.recordPost(feedId, item, platformId, { id: 'skipped-backlog' });
             continue;
           }
 
@@ -48,28 +55,24 @@ async function processFeeds() {
             if (platformId === 'bluesky') {
               result = await postToBluesky(text, cardData, feed.settings.bluesky);
             }
-           else if (platformId === 'mastodon') {
-            result = await postToMastodon(text, cardData, feed.settings.mastodon);
-          }
+            else if (platformId === 'mastodon') {
+              result = await postToMastodon(text, cardData, feed.settings.mastodon);
+            }
             else if (platformId === 'threads') {
               result = await postToThreads(text, cardData, feed.settings.threads, feedId);
             }
 
             if (result) {
               await db.recordPost(feedId, item, platformId, result);
-              postsThisInterval++;
+              postsThisInterval[platformId]++;
             }
             
-            // Add delay between posts
+            // Add delay between posts to prevent immediate rate-limits
             await new Promise(resolve => setTimeout(resolve, 2000));
 
           } catch (error) {
             console.error(`Error posting item ${item.guid} to ${platformId}:`, error);
           }
-        }
-
-        if (postsThisInterval >= MAX_POSTS_PER_INTERVAL) {
-          break;
         }
       }
     } catch (error) {
