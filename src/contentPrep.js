@@ -1,4 +1,5 @@
 // src/contentPrep.js
+
 const axios = require('axios');
 const cheerio = require('cheerio');
 
@@ -15,6 +16,8 @@ class ContentPrep {
                     $('meta[name="description"]').attr('content'),
         image: $('meta[property="og:image"]').attr('content') || 
                $('meta[name="twitter:image"]').attr('content'),
+        imageAlt: $('meta[property="og:image:alt"]').attr('content') || 
+                  $('meta[name="twitter:image:alt"]').attr('content'),
         url: url
       };
     } catch (error) {
@@ -30,7 +33,9 @@ class ContentPrep {
         url: item.link,
         title: metadata?.title || item.title,
         description: metadata?.description,
-        imageUrl: metadata?.image
+        imageUrl: metadata?.image,
+        // Also map it in your preparePost method (if you use this method anywhere):
+        imageAlt: metadata?.imageAlt
       }
     };
   }

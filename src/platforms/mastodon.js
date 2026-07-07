@@ -27,8 +27,11 @@ async function postToMastodon(text, cardData, settings) {
           contentType: imageResponse.headers['content-type'] || 'image/jpeg'
         });
         
-        if (cardData.title) {
-          formData.append('description', cardData.title);
+        if (cardData.imageAlt) {
+          formData.append('description', cardData.imageAlt);
+        } else if (cardData.title) {
+          // Fallback to title if no alt text is available
+          formData.append('description', cardData.title); 
         }
         
         console.log('Uploading media to Mastodon...');

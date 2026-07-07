@@ -47,7 +47,8 @@ async function processFeeds() {
               url: item.link,
               title: metadata?.title || item.title,
               description: metadata?.description,
-              imageUrl: metadata?.image
+              imageUrl: metadata?.image,
+              imageAlt: metadata?.imageAlt
             };
 
             let result;
