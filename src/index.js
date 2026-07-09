@@ -42,14 +42,11 @@ async function processFeeds() {
 
           try {
             const metadata = await contentPrep.extractMetadata(item.link);
-            const text = `${item.title}\n\n${item.link}`;
-            const cardData = {
-              url: item.link,
-              title: metadata?.title || item.title,
-              description: metadata?.description,
-              imageUrl: metadata?.image,
-              imageAlt: metadata?.imageAlt
-            };
+            const maxTags = typeof feed.max_tags === 'number' ? feed.max_tags : 0;
+            const postPrep = contentPrep.preparePost(item, metadata, maxTags);
+            
+            const text = postPrep.text;
+            const cardData = postPrep.card;
 
             let result;
             console.log(`Posting item ${item.guid} to ${platformId}`);  
